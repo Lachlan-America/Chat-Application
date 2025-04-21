@@ -17,11 +17,13 @@ Chatify is a real-time chat application built with the MERN stack, featuring cus
 - 📱 **Responsive Design** using TailwindCSS for mobile & desktop
 
 ## 🧠 What I Learned
-- Managing local state in React to control form inputs and UI behavior
-- Building and securing authentication flows using JWT and bcrypt
+- How JWTS and cookies are used to keep users logged in and secure against cross-origin resource sharing and XSS, and how to mitigate them (only allow trusted domains; sanitise input fields; read-only, secure cookies and not storing sessions in local storage)
+- That there is a prebuilt package to hash passwords with salt before storage (used bcrypt), and it is done server-side, to prevent the user from gaining the hash algorithm
+- Real-time chat with live UI updates with React (figuring out socket events with socket.io and state syncing was a fun challenge)
 - Structuring Express routes and API endpoints with async callback functions
-- Applying TailwindCSS for faster and more intuitive UI styling
-- Using socket.io for persistent real-time communication between users
+- Applying Tailwindcss for the first time with faster and more intuitive UI styling (found it faster than writing pure CSS)
+- There is a lot to protect from, assume the client can do ANYTHING (including putting massive amounts of lorem ipsum as a username)
+- How to set up a basic user profile system with server-side validation to prevent duplicates
 
 ## 📸 Screenshots
 
