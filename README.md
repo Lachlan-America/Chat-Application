@@ -1,16 +1,30 @@
-**Project 1:** **React + Node (Express)** (Small but polished)
 
-* **Example:** A personal blog where you post your learnings.
-* **Tech:** React (Next.js?), Tailwind, Node.js, Express, MongoDB/PostgreSQL
-* **Deployment:** Vercel + Railway
-* **Goal:** Learn React, API calls, authentication (if needed), and deployment.
+# Chatify (Chat-Application)
 
-Basic commands:npm create-react-app `<directory>`
+A simple messenger app using React and Tailwind for frontend, Node.js and express for backend.
 
-```javascript
- npm install ajv@latest ajv-keywords@latest
-```
+## Tech Stack
 
-For node:
+- React + Tailwind (frontend)
+- Node.js + Express (backend)
+- MongoDB (database)
 
-**express, mongoose, dotenv, cors, socket.io**
+## Features
+
+- User authentication (JWT) for sockets
+- Can create and use a profile (with server checks for profile dupes) with associated password (hashed with salt) to chat with others
+- Real-time UI updates with efficient rendering
+
+## What I Learned
+
+- Building full-stack apps with the MERN stack
+- Handling authentication securely with JWT
+- Structuring reusable React components
+
+## Screenshots
+
+
+## Future Improvements
+
+- Add user roles (admin vs. regular users)
+- Add different chat rooms
