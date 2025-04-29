@@ -23,7 +23,7 @@ export default class ChatServer {
         this.app.use(express.json()); // Middleware to parse JSON bodies
         this.app.use(cors()); // Middleware to enable CORS (Cross-Origin Resource Sharing)
         
-        mongoose.connect('mongodb://localhost:27017/local', {
+        mongoose.connect('mongodb+srv://lachlanamerica2000:3laBCoVxm4LnPq5d@cluster0.e4ki3lm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
             useNewUrlParser: true,
             useUnifiedTopology: true
         }).then(() => {
