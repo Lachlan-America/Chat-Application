@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { io } from "socket.io-client";
-import './env.js';
 
-const API_URL = process.env.API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function MsgRoom() {
   const socket = useRef(null);

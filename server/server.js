@@ -8,7 +8,8 @@ import mongoose from "mongoose";
 import User from "./models/User.js"; 
 import { createUser, checkUsername, loginUser, uploadUserPhoto } from "./auth_controller.js";
 import { debug } from "console";
-import './env.js';
+import dotenv from "dotenv";
+dotenv.config();
 
 export default class ChatServer {
     static SECRET_KEY = process.env.SECRET_KEY;
