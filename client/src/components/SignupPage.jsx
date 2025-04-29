@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "./constants.js";
+import './env.js';
+
+const API_URL = process.env.API_URL;
 
 export default function SignupPage() {
     // State to hold the form values
