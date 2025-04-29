@@ -5,9 +5,6 @@ import SignupPage from './components/SignupPage';
 import HomePage from './components/HomePage';
 import MsgRoom from './components/MsgRoom';
 import ProfilePage from './components/ProfilePage';
-// Specifying environment variables
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env' });
 
 /**
 * Defines the main application component.
