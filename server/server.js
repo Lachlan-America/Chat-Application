@@ -8,9 +8,10 @@ import mongoose from "mongoose";
 import User from "./models/User.js"; 
 import { createUser, checkUsername, loginUser, uploadUserPhoto } from "./auth_controller.js";
 import { debug } from "console";
+import './env.js';
 
 export default class ChatServer {
-    static SECRET_KEY = 'secret';
+    static SECRET_KEY = process.env.SECRET_KEY;
     // Currently username to JWT
     static USERS = new Map(); 
 
@@ -35,7 +36,7 @@ export default class ChatServer {
         this.http_server = http.createServer(this.app);
         this.io = new SocketServer(this.http_server, {
             cors: {
-                origin: "*", //["http://localhost:5000"], // Don't want other domains to run scripts on this server
+                origin: [process.env.ORIGIN], // Don't want other domains to run scripts on this server
             },
             pingInterval: 10000,  // Send a ping every 10 seconds
             pingTimeout: 5000,    // Disconnect if no pong within 5 seconds
