@@ -35,7 +35,7 @@ Client-side + server-side validations
 Secure login with token-based authentication  
 ![LoginPage](https://github.com/user-attachments/assets/2a6b1b1b-0eb5-4e17-a737-16643fa907ff)
 
-### 💬 Chatroom (Lachlan vs. Edward perspectives)  
+### 💬 Chatroom (different perspectives)  
 Fully functional, real-time message sync  
 ![LachlanPerspective](https://github.com/user-attachments/assets/856a6e7d-b2f7-43d8-a901-de7f59d1b2a7)  
 ![EdwardPerspective](https://github.com/user-attachments/assets/01675a2e-dd6e-4895-b7d3-c99478b28c14)
