@@ -1,13 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "Debatify is a game where the players are given 2 sides to a prompt, and the winner is voted whomever is the most convincing",
-  "main": "index.js",
+  "description": "A simple Node.js server with Express, Mongoose, and Socket.IO",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"Building the application\"" 
+    "start": "node dist/index.js",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +20,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.1",
     "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
   }
 }
