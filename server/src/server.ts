@@ -60,7 +60,7 @@ export default class ChatServer {
     * @param {number} port - The port number on which the server will listen for incoming connections.
     */
     start(port: number): void {
-        this.http_server.listen(port, () => ChatServer.debug(`Server running on http://localhost:${port}`));
+        this.http_server.listen(port, () => ChatServer.debug(`Server running on port:${port}`));
         
         // Middleware to authenticate the socket connection using JWT
         this.authenticateClient()
