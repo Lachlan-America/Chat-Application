@@ -19,7 +19,7 @@ interface Message {
 }
 
 export default class ChatServer {
-    static SECRET_KEY: string = process.env.SECRET_KEY ?? "";
+    static SECRET_KEY: string = process.env.JWT_SECRET ?? "";
     static USERS: Map<string, string> = new Map();
 
     clients: AuthenticatedSocket[] = [];
@@ -69,7 +69,10 @@ export default class ChatServer {
         // All middleware to parse JSON and URL-encoded data. Handles corresponding fetch requests from the client
         // Associates the routes with their respective controller functions
         this.app.post('/api/check-username', checkUsername); 
-        this.app.post('/api/create-user', createUser); 
+        console.log(`Profile creation is ${process.env.ENABLE_PROFILE_CREATION}`);
+        if(process.env.ENABLE_PROFILE_CREATION === "true") {
+            this.app.post('/api/create-user', createUser); 
+        }
         this.app.post('/api/login', loginUser);
         this.app.post('/api/upload', uploadUserPhoto);
     }

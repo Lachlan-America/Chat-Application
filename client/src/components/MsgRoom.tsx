@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client";
 import type { DefaultEventsMap } from "@socket.io/component-emitter";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function MsgRoom() {
@@ -20,14 +21,16 @@ export default function MsgRoom() {
         token: localStorage.getItem("token"), // Or pass cookie if using httpOnly
       },
     });
+
     const handleMessage = ({ text, sender }: { text: string; sender: string }) => {
       console.log(`Received ${text} from ${sender}`); // Log the message and sender ID
       setMessages((prev) => [...prev, { text: text, sender: sender}]);
     };
+
     const handleHistory = (data: { history: { text: string; sender: string }[]; sender: string }) => {
       setMessages((prevMessages) => [...prevMessages, ...data.history]);  // Update state with the message history
-      setUsername(data.sender); // Store the ID of the connected user
-      console.log(`Received ${data.history} and ID: ${data.sender}`); // Log the message and sender ID
+      setUsername(data.sender);                                           // Store the ID of the connected user
+      console.log(`Received ${data.history} and ID: ${data.sender}`);     // Log the message and sender ID
     };
 
     socket.current.on("messageHistory", handleHistory); 
