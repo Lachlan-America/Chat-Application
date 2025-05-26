@@ -118,6 +118,14 @@ export default class ChatServer {
             socket.on("disconnect", () => {
                 this.removeClient(socket);
             });
+
+            socket.on("typing", () => {
+                this.io.emit("typing", { sender: socket.user?.toString() });
+            });
+
+            socket.on("stopTyping", () => {
+                this.io.emit("stopTyping", { sender: socket.user?.toString() });
+            });
         });
     }
 
@@ -141,7 +149,7 @@ export default class ChatServer {
     sendMessage(socket: AuthenticatedSocket, obj: Message): void {
         ChatServer.debug(`${socket.user}: ${obj.text}`);
         this.messageHistory.push({ text: obj.text, sender: socket.user?.toString() || "unknown" });
-        this.io.emit("receiveMessage", { text: obj.text, sender: socket.user?.toString() || "unknown" });
+        this.io.emit("receiveMessage", { text: obj.text, sender: socket.user?.toString() });
     }
 
     /**

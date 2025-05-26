@@ -43,7 +43,7 @@ export default class ChatServer {
     * @param {number} port - The port number on which the server will listen for incoming connections.
     */
     start(port) {
-        this.http_server.listen(port, () => ChatServer.debug(`Server running on http://localhost:${port}`));
+        this.http_server.listen(port, () => ChatServer.debug(`Server running on port:${port}`));
         // Middleware to authenticate the socket connection using JWT
         this.authenticateClient();
         this.handleClient();
@@ -94,6 +94,13 @@ export default class ChatServer {
             // Handle disconnections to avoid memory leaks
             socket.on("disconnect", () => {
                 this.removeClient(socket);
+            });
+            socket.on("typing", ({ toUserId }) => {
+                // send to the intended recipient
+                this.io.emit("typing", { sender: socket.user?.toString() });
+            });
+            socket.on("stopTyping", ({ toUserId }) => {
+                this.io.emit("stopTyping", { sender: socket.user?.toString() });
             });
         });
     }

@@ -106,7 +106,7 @@ export async function loginUser(req: Request, res: Response): Promise<any> {
         //ChatServer.debug(`User '${username}' logged in successfully`);
         const secretKey = process.env.JWT_SECRET;
         if (!secretKey) {
-            return res.status(500).json({ message: 'Server configuration error: SECRET_KEY is not set.' });
+            return res.status(500).json({ message: 'Server configuration error: JWT_SECRET is not set.' });
         }
         const token = jwt.sign(
             { userId: user._id, username: user.username },
@@ -183,7 +183,7 @@ export async function uploadUserPhoto(req: Request, res: Response): Promise<any>
         //ChatServer.debug(ChatServer.SECRET_KEY);
         const secretKey = process.env.JWT_SECRET;
         if (!secretKey) {
-            return res.status(500).json({ message: 'Server configuration error: SECRET_KEY is not set.' });
+            return res.status(500).json({ message: 'Server configuration error: JWT_SECRET is not set.' });
         }
         const token = jwt.sign({ userId: user._id, username: user.username }, secretKey, { expiresIn: '1m' });
         res.status(200).json({ token });
