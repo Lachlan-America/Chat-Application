@@ -14,13 +14,14 @@ export default function MsgRoom() {
   const chatEndRef = useRef<HTMLDivElement>(null);  
 
   const {
-  messages,
-  typingUsers,
-  username,
-  input,
-  sendMessage,
-  handleInputChange,
-} = useChatSocket();
+    messages,
+    typingUsers,
+    username,
+    setInput,
+    input,
+    sendMessage,
+    handleInputChange,
+  } = useChatSocket();
 
   // This function scrolls to the bottom of the chat window
   const scrollToBottom = () => {
@@ -30,10 +31,23 @@ export default function MsgRoom() {
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
   };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => { 
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent default Enter action
+      if (e.shiftKey) {
+        setInput(prev => prev + "\n") // Allow Shift+Enter for new lines
+        return;
+      }
+      sendMessage();
+    }
+  }
+
   // Use useLayoutEffect to scroll immediately after rendering
   useLayoutEffect(() => {
     scrollToBottom();
   }, [messages, typingUsers]);
+
 
   return (
     // TODO: Fix so the name is justified to the msg box
@@ -62,13 +76,13 @@ export default function MsgRoom() {
       </div>
 
       <div className="flex border-t border-gray-300 p-2">
-        <input
-          type="text"
-          className="flex-1 p-2 border rounded-md"
+        <textarea
+          className="flex-1 p-2 border rounded-md resize-none max-h-[1000px] overflow-y-auto"
           placeholder="Type a message..."
           value={input}
           onChange={handleInputChange}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          onKeyDown={onKeyDown}
+          rows={2}
         />
         <button onClick={sendMessage} className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-md"> Send </button>
       </div>

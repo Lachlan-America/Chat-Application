@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect, useCallback } from "react";
 import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 interface Message {
     text: string;
@@ -21,6 +22,7 @@ export default function useChatSocket() {
     // Doesn't cause re-renders, and stays the same across renders
     const socket = useRef<Socket | null>(null);
     const usernameRef = useRef<string>("");
+    const navigate = useNavigate();
 
     const [input, setInput] = useState<string>("");
     const [messages, setMessages] = useState<Message[]>([]);
@@ -56,12 +58,17 @@ export default function useChatSocket() {
         return next;
       });
     };
-
+    const invalidToken = () => {
+        // Remove token and redirect to login
+        sessionStorage.removeItem("token");
+        navigate("/login");
+    }
     // This effect runs when the component mounts, setting up the socket connection
     // Need to remove the listener when the component unmounts to avoid memory leaks
     useEffect(() => {
+        if(!sessionStorage.getItem("token")) navigate("/login"); 
         socket.current = io(import.meta.env.VITE_API_URL, { auth: { token: sessionStorage.getItem("token"), }, });
-
+        socket.current.on("authError", invalidToken);
         socket.current.on("messageHistory", handleHistory); 
         socket.current.on("receiveMessage", handleMessage);
         socket.current.on("typing", addTypingUsers);
@@ -70,6 +77,7 @@ export default function useChatSocket() {
         // The return is a cleanup function that runs when the component unmounts
         return () => {
         if (socket.current) {
+            socket.current.off("authError", handleHistory); 
             socket.current.off("messageHistory", handleHistory); 
             socket.current.off("receiveMessage", handleMessage);
             socket.current.off("typing", addTypingUsers); 
@@ -90,7 +98,7 @@ export default function useChatSocket() {
     };
     const sendTyping = debounce(() => { if (socket.current) socket.current.emit("typing", usernameRef.current); }, 300);
     const sendStopTyping = debounce(() => { if (socket.current) socket.current.emit("stopTyping", usernameRef.current); }, 3000);
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInput(e.target.value);     // update input state
         sendTyping();                 // debounce triggers after 300ms
         sendStopTyping();             // resets the 1000ms timer
@@ -100,6 +108,7 @@ export default function useChatSocket() {
         messages,
         typingUsers,
         username: usernameRef.current,
+        setInput,
         input,
         sendMessage,
         handleInputChange,

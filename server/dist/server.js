@@ -67,6 +67,8 @@ export default class ChatServer {
             const token = socket.handshake.auth.token;
             if (!token) {
                 ChatServer.debug(`'${socket.id}' didn't provide a token!`);
+                socket.emit("authError");
+                socket.disconnect();
                 return next(new Error('Authentication error'));
             }
             try {
@@ -77,6 +79,8 @@ export default class ChatServer {
             }
             catch (err) {
                 ChatServer.debug(`'${socket.id}' has an invalid token!`);
+                socket.emit("authError");
+                socket.disconnect();
                 return next(new Error('Invalid token'));
             }
         });
