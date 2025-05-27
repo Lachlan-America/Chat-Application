@@ -30,7 +30,7 @@ export default function LoginPage() {
             const data: LoginResponse = await res.json();
             if (res.status === 200) {
                 alert('Login successful!');
-                localStorage.setItem('token', data.token as string);
+                sessionStorage.setItem('token', data.token as string);
                 navigate('/chat');
             } else {
                 setError(data.message as string);

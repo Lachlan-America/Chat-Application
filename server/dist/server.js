@@ -95,11 +95,10 @@ export default class ChatServer {
             socket.on("disconnect", () => {
                 this.removeClient(socket);
             });
-            socket.on("typing", ({ toUserId }) => {
-                // send to the intended recipient
+            socket.on("typing", () => {
                 this.io.emit("typing", { sender: socket.user?.toString() });
             });
-            socket.on("stopTyping", ({ toUserId }) => {
+            socket.on("stopTyping", () => {
                 this.io.emit("stopTyping", { sender: socket.user?.toString() });
             });
         });
@@ -123,7 +122,7 @@ export default class ChatServer {
     sendMessage(socket, obj) {
         ChatServer.debug(`${socket.user}: ${obj.text}`);
         this.messageHistory.push({ text: obj.text, sender: socket.user?.toString() || "unknown" });
-        this.io.emit("receiveMessage", { text: obj.text, sender: socket.user?.toString() || "unknown" });
+        this.io.emit("receiveMessage", { text: obj.text, sender: socket.user?.toString() });
     }
     /**
     * Removes a client from the server when they disconnect.
