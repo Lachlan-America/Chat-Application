@@ -125,8 +125,8 @@ export default class ChatServer {
     */
     sendMessage(socket, obj) {
         ChatServer.debug(`${socket.user}: ${obj.text}`);
-        this.messageHistory.push({ text: obj.text, sender: socket.user?.toString() || "unknown" });
-        this.io.emit("receiveMessage", { text: obj.text, sender: socket.user?.toString() });
+        this.messageHistory.push(obj);
+        this.io.emit("receiveMessage", obj);
     }
     /**
     * Removes a client from the server when they disconnect.

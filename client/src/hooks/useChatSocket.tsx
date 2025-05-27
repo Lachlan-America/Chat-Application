@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 interface Message {
     text: string;
     sender: string;
+    datetime: Date;
 }
 
 const debounce = <T extends (...args: any[]) => void>(func: T, delay: number): 
@@ -29,7 +30,7 @@ export default function useChatSocket() {
     const [typingUsers, setTypingUsers] = useState<Set<string>>(new Set());
 
     // Define listener functions outside of useEffect to avoid re-creating them on every render
-    const handleMessage = (msg: Message) => { setMessages((prev) => [...prev, msg]); };
+    const receiveMessage = (msg: Message) => { setMessages((prev) => [...prev, msg]); };
     const handleHistory = (data: { history: Message[]; sender: string }) => {
         setMessages((prevMessages) => [...prevMessages, ...data.history]);
         usernameRef.current = data.sender;             
@@ -70,7 +71,7 @@ export default function useChatSocket() {
         socket.current = io(import.meta.env.VITE_API_URL, { auth: { token: sessionStorage.getItem("token"), }, });
         socket.current.on("authError", invalidToken);
         socket.current.on("messageHistory", handleHistory); 
-        socket.current.on("receiveMessage", handleMessage);
+        socket.current.on("receiveMessage", receiveMessage);
         socket.current.on("typing", addTypingUsers);
         socket.current.on("stopTyping", delTypingUsers);
 
@@ -79,7 +80,7 @@ export default function useChatSocket() {
         if (socket.current) {
             socket.current.off("authError", handleHistory); 
             socket.current.off("messageHistory", handleHistory); 
-            socket.current.off("receiveMessage", handleMessage);
+            socket.current.off("receiveMessage", receiveMessage);
             socket.current.off("typing", addTypingUsers); 
             socket.current.off("stopTyping", delTypingUsers);
             socket.current.disconnect();
@@ -92,7 +93,8 @@ export default function useChatSocket() {
         if (input === "") return; 
         if (socket.current) {
             socket.current.emit("stopTyping", usernameRef.current);
-            socket.current.emit("sendMessage", { text: input.trim(), sender: usernameRef.current });
+            const obj = { text: input.trim(), sender: usernameRef.current, datetime: new Date() };
+            socket.current.emit("sendMessage", obj);
         }
         setInput("");
     };

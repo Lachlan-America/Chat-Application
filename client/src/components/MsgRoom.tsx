@@ -10,6 +10,7 @@ import data from '@emoji-mart/data';
 interface Message {
     text: string;
     sender: string;
+    datetime: Date;
 }
 
 export default function MsgRoom() {
@@ -48,7 +49,7 @@ export default function MsgRoom() {
 
   function formatTimestamp(timestamp: string | number | Date): string {
     const date = new Date(timestamp);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   }
 
   // Use useLayoutEffect to scroll immediately after rendering
@@ -67,6 +68,7 @@ export default function MsgRoom() {
               <div className={`text-sm font-semibold text-gray-600 mb-1 ${obj.sender === username ? "text-right" : "text-left"}`}>{obj.sender}</div>
               <div className={`p-2 rounded-md break-words whitespace-pre-wrap ${obj.sender === username 
                 ? "bg-blue-500 text-white justiy-left" : "bg-gray-300 text-black justify-right"}`}>{obj.text}</div>
+              <div className="">{formatTimestamp(obj.datetime)}</div>
             </div>
           </div>
         ))}

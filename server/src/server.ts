@@ -16,6 +16,7 @@ interface AuthenticatedSocket extends Socket {
 interface Message {
     text: string;
     sender: string;
+    datetime: Date;
 }
 
 export default class ChatServer {
@@ -152,8 +153,8 @@ export default class ChatServer {
     */
     sendMessage(socket: AuthenticatedSocket, obj: Message): void {
         ChatServer.debug(`${socket.user}: ${obj.text}`);
-        this.messageHistory.push({ text: obj.text, sender: socket.user?.toString() || "unknown" });
-        this.io.emit("receiveMessage", { text: obj.text, sender: socket.user?.toString() });
+        this.messageHistory.push(obj);
+        this.io.emit("receiveMessage", obj);
     }
 
     /**
