@@ -2,6 +2,15 @@
 
 Chatify is a real-time chat application built with the MERN stack, featuring custom user authentication, secure password handling, and responsive UI design. It supports dynamic, socket-based communication and user profile creation with real-time updates.
 
+## Why I made this?
+I built this real-time chat app to learn how full-stack systems talk to each other under the hood. 
+I wanted to understand how things like Socket.IO, authentication flows, and multi-user coordination work, because I’ve always been fascinated by real-time systems, especially games and messaging tools.
+
+It started as a weekend curiosity and became a full-stack app with authentication, protected routes, responsive design, and a working deployment. 
+Along the way, I ran into race conditions, session timing bugs, and UI performance hiccups, but I enjoyed figuring out how to debug them. I now feel way more confident building async systems and thinking about architecture.
+
+This wasn’t just a portfolio project. It was a deep dive into making something real.
+
 ## 🚀 Tech Stack
 - **Frontend**: React, TailwindCSS
 - **Backend**: Node.js, Express
@@ -24,21 +33,6 @@ Chatify is a real-time chat application built with the MERN stack, featuring cus
 - Applying Tailwindcss for the first time with faster and more intuitive UI styling (found it faster than writing pure CSS)
 - There is a lot to protect from, assume the client can do ANYTHING (including putting massive amounts of lorem ipsum as a username)
 - How to set up a basic user profile system with server-side validation to prevent duplicates
-
-## 📸 Screenshots
-
-### 🔐 Signup Page  
-Client-side + server-side validations  
-![SignupPage](https://github.com/user-attachments/assets/1df899b3-789a-48ee-bd83-45a41674e091)
-
-### 🔐 Login Page  
-Secure login with token-based authentication  
-![LoginPage](https://github.com/user-attachments/assets/2a6b1b1b-0eb5-4e17-a737-16643fa907ff)
-
-### 💬 Chatroom (Lachlan vs. Edward perspectives)  
-Fully functional, real-time message sync  
-![LachlanPerspective](https://github.com/user-attachments/assets/856a6e7d-b2f7-43d8-a901-de7f59d1b2a7)  
-![EdwardPerspective](https://github.com/user-attachments/assets/01675a2e-dd6e-4895-b7d3-c99478b28c14)
 
 ## 🧪 Future Improvements
 - 🔁 Multiple chat rooms and group messaging support
