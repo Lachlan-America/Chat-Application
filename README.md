@@ -9,6 +9,7 @@ Click on the link that is advertised in the repo, and then you can use either of
 - Guest3, Password3
 - Guest4, Password4
 - Guest5, Password5
+
 There is a signup feature, but I have disabled it due to the database's maximum size. However, the concept works, and passwords are hashed with salt before they are updated in the DB
 
 ## Why did I make this?
