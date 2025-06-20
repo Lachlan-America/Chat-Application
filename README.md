@@ -10,7 +10,8 @@ Click on the link that is advertised in the repo, and then you can use either of
 - Guest4, Password4
 - Guest5, Password5
 
-There is a signup feature, but I have disabled it due to the database's maximum size. However, the concept works, and passwords are hashed with salt before they are updated in the DB
++ There is a signup feature, but I have disabled it due to the database's maximum size. However, the concept works, and passwords are hashed with salt before they are updated in the DB.
++ Also, the backend is hosted separately with a different platform and usually takes a bit to start up (welcome to free-tier hosting), so just be patient when logging in for the first time.
 
 ## Why did I make this?
 I built this real-time chat app to learn how full-stack systems talk to each other under the hood. 
@@ -19,7 +20,7 @@ I wanted to understand how things like Socket.IO, authentication flows, and mult
 It started as a weekend curiosity and became a full-stack app with authentication, protected routes, responsive design, and a working deployment. 
 Along the way, I ran into race conditions, session timing bugs, and UI performance hiccups, but I enjoyed figuring out how to debug them. I now feel way more confident building async systems and thinking about architecture.
 
-This wasn’t just a portfolio project. It was a deep dive into making something real.
+This wasn’t just a portfolio project; It was a deep dive into making something real.
 
 ## 🚀 Tech Stack
 - **Frontend**: React, TailwindCSS
