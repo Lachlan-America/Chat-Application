@@ -30,7 +30,7 @@ export default function MessageStack() {
             ))}
 
             {/* Typing indicator aligned to the left */}
-            {chatSocket.typingUsers.size > 0 && (
+            {/* {chatSocket.typingUsers.size > 0 && (
                 <div className="flex justify-start">
                 <div className="text-sm text-gray-500 italic">
                     {[...chatSocket.typingUsers].join(", ")} {chatSocket.typingUsers.size === 1 ? "is" : "are"} typing...
@@ -39,7 +39,7 @@ export default function MessageStack() {
             )}
 
             {chatSocket.typingUsers.size > 0 && <TypingIndicator />}
-            <div ref={chatEndRef} />
+            <div ref={chatEndRef} /> */}
         </div>
     );
 }
