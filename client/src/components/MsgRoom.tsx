@@ -17,6 +17,7 @@ export default function MsgRoom() {
   const chatEndRef = useRef<HTMLDivElement>(null);  
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
+  // This is a custom hook that manages the chat socket connection and state
   const {
     messages,
     typingUsers,

@@ -13,6 +13,7 @@
     "@emoji-mart/data": "^1.2.1",
     "@emoji-mart/react": "^1.1.1",
     "@tailwindcss/vite": "^4.0.15",
+    "boxicons": "^2.1.4",
     "dotenv": "^16.5.0",
     "emoji-mart": "^5.6.0",
     "react": "^18.3.1",

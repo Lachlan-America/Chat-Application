@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import InputBox from "./InputBox";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -40,39 +41,16 @@ export default function LoginPage() {
             setError("Network error. Please try again.");
         });
     };
-    
-    const goToSignupPage = () => {
-        navigate('/signup');
-    };
 
     return (
-        <div>
-            <h1>Login</h1>
-            {error && <p className="w-full bg-red-500">{error}</p>}
-            <form onSubmit={handleSubmit} id="loginForm">
-                <div>
-                    <input className="border border-gray-300 rounded-lg shadow-lg mt-8 mb-2 w-lg p-10px"
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <input className="border border-gray-300 rounded-lg shadow-lg mb-5 w-lg p-10px"
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" className="mb-3">Login</button>
-            </form>
-            <button onClick={goToSignupPage}>Don't have an account? Sign Up</button>
-        </div>
+        <form onSubmit={handleSubmit} 
+        className="flex flex-col items-center gap-5 justify-center w-[25vw] min-w-[350px] h-[50vh] border-1 rounded-[40px] shadow-l backdrop-blur-md p-[40px]">
+            <h1 className="mb-10 text-[3.5rem] font-bold">Login</h1>
+            {error && <p className="w-full bg-red-500 text-lg p-1">{error}</p>}
+            <InputBox icon="bx-user" name="username" placeholder="Username" value={username} setValue={setUsername} />
+            <InputBox icon="bx-lock" name="password" placeholder="Password" value={password} setValue={setPassword} />
+            <button className="h-[60px] w-full mt-5" type="submit">Login</button>
+            <p>Don't have an account? <a onClick={() => navigate('/signup')}>Sign up!</a></p>
+        </form>
     );
 }

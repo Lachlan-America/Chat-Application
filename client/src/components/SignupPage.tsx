@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import InputBox from "./InputBox";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -73,44 +74,18 @@ export default function SignupPage() {
             setError('Please choose a different username.');
         }
     };
-    
 
     return (
         <div>
-            <h1  className="mb-5">Sign Up</h1>
-            {error && <p className="w-full bg-red-500">{error}</p>}
-            <form onSubmit={handleSubmit} id="signupForm">
-                <div>
-                    <input className="border border-gray-300 rounded-lg shadow-lg mt-8 mb-2 w-lg p-10px"
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <input className="border border-gray-300 rounded-lg shadow-lg mb-2 w-lg p-10px"
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <input className="border border-gray-300 rounded-lg shadow-lg mb-5 w-lg p-10px"
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirm Password"
-                        value={repeatPassword}
-                        onChange={(e) => setRepeatPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" className="mb-3">Create Profile</button>
+            <form onSubmit={handleSubmit} 
+            className="flex flex-col items-center gap-5 justify-center w-[25vw] min-w-[350px] h-[50vh] border-1 rounded-[40px] shadow-l backdrop-blur-md p-[40px]">
+                <h1 className="mb-10 text-[3.5rem] font-bold">Sign Up</h1>
+                {error && <p className="w-full bg-red-500 text-lg p-1">{error}</p>}
+                <InputBox icon="bx-user" name="username" placeholder="Username" value={username} setValue={setUsername} />
+                <InputBox icon="bx-lock" name="password" placeholder="Password" value={password} setValue={setPassword} />
+                <InputBox icon="bx-lock" name="confirmPassword" placeholder="Confirm Password" value={repeatPassword} setValue={setRepeatPassword} />
+                <button className="relative h-[60px] w-full mt-5" type="submit">Create Profile</button>
+                <p>Already have an account? <a onClick={() => navigate('/login')}>Log in!</a></p>
             </form>
         </div>
     );

@@ -7,9 +7,9 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1 className='mb-2'>Welcome to Chatify!</h1>
+      <h1 className='text-2xl mb-2'>Welcome to Chatify!</h1>
       <p className='mb-10'>(My portfolio Messenger knock-off!)</p>
-      <button className="bg-neutral-500" onClick={() => navigate('/login')}> Go to Login! </button>
+      <button className="h-[60px] w-full" onClick={() => navigate('/login')}> Go to Login! </button>
     </div>
   );
 }
