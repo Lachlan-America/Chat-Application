@@ -39,11 +39,8 @@ export default function useChatSocket() {
     const addTypingUsers = ({sender}: { sender: string }) => {
         // Prevent adding self to typingUsers
         console.log(`User ${sender} is typing`);
+        if (sender == username) return;
         setTypingUsers((prev) => {
-            // If the user is already in the set, do nothing
-            console.log(username)
-            if (sender == username || prev.has(sender)) return prev;
-
             const next = new Set(prev);
             next.add(sender as string);
             return next;
@@ -105,8 +102,8 @@ export default function useChatSocket() {
         sendTyping();                 // debounce triggers after 300ms
         sendStopTyping();             // resets the 1000ms timer
     };
-    const sendTyping = debounce(() => { socket.current ? socket.current.emit("typing", username) : null; }, 300);
-    const sendStopTyping = debounce(() => { socket.current ? socket.current.emit("stopTyping", username) : null; }, 3000);
+    const sendTyping = debounce(() => { if (socket.current) socket.current.emit("typing", username)}, 300);
+    const sendStopTyping = debounce(() => { if (socket.current) socket.current.emit("stopTyping", username)}, 3000);
 
     return {
         input,

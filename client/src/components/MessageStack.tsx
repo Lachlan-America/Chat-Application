@@ -22,7 +22,7 @@ export default function MessageStack() {
       }, [chatSocket.messages, chatSocket.typingUsers]);
 
     return (
-        <div className="flex flex-col overflow-y-auto px-4 space-y-4 h-full w-full">
+        <div className="flex flex-col overflow-y-auto p-4 space-y-4 h-full w-full">
             {chatSocket.messages.filter((obj) => obj.sender).map((obj, index) => (
                 <div key={index} className={`flex ${obj.sender === chatSocket.username ? "justify-end" : "justify-start"}`}>
                     <Message text={obj.text} sender={obj.sender} datetime={obj.datetime} />
