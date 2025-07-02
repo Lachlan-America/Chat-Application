@@ -38,8 +38,8 @@ export default function MessageStack() {
                 </div>
             )}
 
-            {chatSocket.typingUsers.size > 0 && <TypingIndicator />}
-            <div ref={chatEndRef} /> */}
+            {chatSocket.typingUsers.size > 0 && <TypingIndicator />}*/}
+            <div ref={chatEndRef} />
         </div>
     );
 }
