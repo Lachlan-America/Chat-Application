@@ -11,7 +11,7 @@ export default function InputBox({icon, name, placeholder, value, setValue}: Inp
     return (
         <div className="relative h-[50px] w-full">
             <input className="border border-gray-300 rounded-full shadow-lg w-full h-full text-[20px] p-4"
-                type={name === "password" ? "password" : "text"}
+                type={name === "password" || name === "confirmPassword" ? "password" : "text"}
                 name={name}
                 placeholder={placeholder}
                 value={value}

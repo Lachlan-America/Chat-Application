@@ -22,10 +22,11 @@ const debounce = <T extends (...args: any[]) => void>(func: T, delay: number):
 export default function useChatSocket() {
     // Doesn't cause re-renders, and stays the same across renders
     const socket = useRef<Socket | null>(null);
-    const usernameRef = useRef<string>("");
     const navigate = useNavigate();
 
+    // State variables cause re-renders when they change
     const [input, setInput] = useState<string>("");
+    const [username, setUsername] = useState<string>("");
     const [messages, setMessages] = useState<Message[]>([]);
     const [typingUsers, setTypingUsers] = useState<Set<string>>(new Set());
 
@@ -33,37 +34,38 @@ export default function useChatSocket() {
     const receiveMessage = (msg: Message) => { setMessages((prev) => [...prev, msg]); };
     const handleHistory = (data: { history: Message[]; sender: string }) => {
         setMessages((prevMessages) => [...prevMessages, ...data.history]);
-        usernameRef.current = data.sender;             
+        setUsername(() => data.sender);
     };
     const addTypingUsers = ({sender}: { sender: string }) => {
         // Prevent adding self to typingUsers
         console.log(`User ${sender} is typing`);
         setTypingUsers((prev) => {
             // If the user is already in the set, do nothing
-            console.log(usernameRef.current)
-            if (sender == usernameRef.current || prev.has(sender)) return prev; 
-            
+            console.log(username)
+            if (sender == username || prev.has(sender)) return prev;
+
             const next = new Set(prev);
             next.add(sender as string);
             return next;
         });
     };
-    const delTypingUsers = ({sender}: { sender: string }) => {
-      console.log(`User ${sender} stopped typing`);
-      setTypingUsers((prev) => {
-        // Only change the set if the user is in it
-        if (!prev.has(sender)) return prev;
-        
-        const next = new Set(prev);
-        next.delete(sender as string);
-        return next;
-      });
+    const delTypingUsers = ({ sender }: { sender: string }) => {
+        console.log(`User ${sender} stopped typing`);
+        setTypingUsers((prev) => {
+            if (!prev.has(sender)) return prev;
+            
+            const next = new Set(prev);
+            next.delete(sender as string);
+            return next;
+        });
     };
+
+    // Remove token and redirect to login
     const invalidToken = () => {
-        // Remove token and redirect to login
         sessionStorage.removeItem("token");
         navigate("/login");
     }
+
     // This effect runs when the component mounts, setting up the socket connection
     // Need to remove the listener when the component unmounts to avoid memory leaks
     useEffect(() => {
@@ -77,14 +79,14 @@ export default function useChatSocket() {
 
         // The return is a cleanup function that runs when the component unmounts
         return () => {
-        if (socket.current) {
-            socket.current.off("authError", handleHistory); 
-            socket.current.off("messageHistory", handleHistory); 
-            socket.current.off("receiveMessage", receiveMessage);
-            socket.current.off("typing", addTypingUsers); 
-            socket.current.off("stopTyping", delTypingUsers);
-            socket.current.disconnect();
-        }
+            if (socket.current) {
+                socket.current.off("authError", invalidToken); 
+                socket.current.off("messageHistory", handleHistory); 
+                socket.current.off("receiveMessage", receiveMessage);
+                socket.current.off("typing", addTypingUsers); 
+                socket.current.off("stopTyping", delTypingUsers);
+                socket.current.disconnect();
+            }
         };
     }, []);
 
@@ -92,26 +94,26 @@ export default function useChatSocket() {
     const sendMessage = () => {
         if (input === "") return; 
         if (socket.current) {
-            socket.current.emit("stopTyping", usernameRef.current);
-            const obj = { text: input.trim(), sender: usernameRef.current, datetime: new Date() };
+            socket.current.emit("stopTyping", username);
+            const obj = { text: input.trim(), sender: username, datetime: new Date() };
             socket.current.emit("sendMessage", obj);
         }
         setInput("");
     };
-    const sendTyping = debounce(() => { if (socket.current) socket.current.emit("typing", usernameRef.current); }, 300);
-    const sendStopTyping = debounce(() => { if (socket.current) socket.current.emit("stopTyping", usernameRef.current); }, 3000);
     const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInput(e.target.value);     // update input state
         sendTyping();                 // debounce triggers after 300ms
         sendStopTyping();             // resets the 1000ms timer
     };
+    const sendTyping = debounce(() => { socket.current ? socket.current.emit("typing", username) : null; }, 300);
+    const sendStopTyping = debounce(() => { socket.current ? socket.current.emit("stopTyping", username) : null; }, 3000);
 
     return {
+        input,
         messages,
         typingUsers,
-        username: usernameRef.current,
+        username,
         setInput,
-        input,
         sendMessage,
         handleInputChange,
     };
