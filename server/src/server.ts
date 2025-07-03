@@ -76,7 +76,14 @@ export default class ChatServer {
         }
         this.app.post('/api/login', loginUser);
         this.app.post('/api/upload', uploadUserPhoto);
+
+        setInterval(() => {
+            ChatServer.debug("Clearing message history...");
+            this.messageHistory = [];
+            this.io.emit('chatCleared');
+        }, 15 * 60 * 1000);
     }
+
 
     /**
     * Middleware to authenticate the socket connection using JWT.
