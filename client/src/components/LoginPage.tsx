@@ -44,7 +44,7 @@ export default function LoginPage() {
 
     return (
         <form onSubmit={handleSubmit} 
-        className="flex flex-col items-center gap-5 justify-center w-[25vw] min-w-[350px] h-[50vh] border-1 rounded-[40px] shadow-l backdrop-blur-md p-[40px]">
+        className="flex flex-col items-center gap-5 justify-center w-[25vw] min-w-[350px] min-h-[500px] h-[50vh] border-1 rounded-[40px] shadow-l backdrop-blur-md p-[40px]">
             <h1 className="mb-10 text-[3.5rem] font-bold">Login</h1>
             {error && <p className="w-full bg-red-500 text-lg p-1">{error}</p>}
             <InputBox icon="bx-user" name="username" placeholder="Username" value={username} setValue={setUsername} />
