@@ -1,6 +1,7 @@
 # 💬 Chatify – Real-Time Chat Application
 
 Chatify is a real-time chat application built with the MERN stack, featuring custom user authentication, secure password handling, and responsive UI design. It supports dynamic, socket-based communication and user profile creation with real-time updates.
+The backend is hosted separately. So it is best to also start it using this link: https://chatify-4tjn.onrender.com
 
 ## How to use it?
 Click on the link that is advertised in the repo, and then you can use either of these test logins:
